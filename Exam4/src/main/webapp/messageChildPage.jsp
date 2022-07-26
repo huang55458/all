@@ -14,7 +14,7 @@
 <body>
 <c:forEach items="${applyUsers}" var="user">
 <div class="d-flex align-items-center px-3 pt-3" id="fatherDom${user.id}">
-    <img src="${pageContext.request.contextPath}/img/rmate2.jpg" class="img-fluid rounded-circle" alt="profile-img">
+    <img style="width:60px; height:50px" src="${user.img}" class="img-fluid rounded-circle" alt="profile-img">
     <div class="ms-3">
         <h6 class="mb-0 d-flex align-items-start text-body fs-6 fw-bold">${user.user_name}<span class="ms-2 material-icons bg-primary p-0 md-16 fw-bold text-white rounded-circle ov-icon">done</span></h6>
         <p class="text-muted mb-0">${user.email}</p>

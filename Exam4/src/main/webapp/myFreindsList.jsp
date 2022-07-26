@@ -15,7 +15,7 @@
 <body>
 <c:forEach items="${friendsList}" var="friend">
 <div href="#" class="p-3 d-flex text-dark text-decoration-none account-item" id="myfriendANdcaozuo${friend.id}">
-    <img src="${pageContext.request.contextPath}/img/rmate3.jpg" class="img-fluid rounded-circle me-3" alt="profile-img">
+    <img style="width:60px; height:50px" src="${friend.img}" class="img-fluid rounded-circle me-3" alt="profile-img">
     <div>
         <p class="fw-bold mb-0 pe-3 d-flex align-items-center">${friend.user_name}
             <c:if test="${friend.status!=0}" var="fss">

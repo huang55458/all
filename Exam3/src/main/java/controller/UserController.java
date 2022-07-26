@@ -155,8 +155,9 @@ public class UserController {
         String fileName = file.getOriginalFilename();
 //        构建file对象,将上传路径和上传后的文件名封装成File对象
         File targetFile = new File(path,fileName);
-        if (!targetFile.exists()){
-            targetFile.mkdirs();
+        File f = new File(path);
+        if (!f.exists()){
+            f.mkdirs();
         }
         try {
 //            开始读取

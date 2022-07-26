@@ -19,7 +19,7 @@
                 <div class="text-center">
                     <div class="position-relative d-flex justify-content-center">
                         <a href="profile.html" class="text-decoration-none">
-                            <img src="${pageContext.request.contextPath}/img/rmate1.jpg" class="img-fluid rounded-circle mb-3" alt="profile-img">
+                            <img style="width:60px; height:50px" src="${user.img}" class="img-fluid rounded-circle mb-3" alt="profile-img">
                         </a>
                     </div>
                     <p class="fw-bold text-dark m-0">${user.user_name}</p>
