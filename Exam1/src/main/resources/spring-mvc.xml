@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+
+    <!-- 开启AOP注解扫描 -->
+<!--    <aop:aspectj-autoproxy proxy-target-class="true"/>-->
+
+    <!-- 声明方面组件 -->
+    <!--    <bean id="operateLogger" class="aspect.OperateLogger"></bean>-->
+    <!--将AOP作用到目标组件之上-->
+
+    <!--    <aop:config>-->
+    <!--前置通知 配置实现-->
+    <!--        <aop:aspect ref="operateLogger">-->
+    <!--            <aop:before method="log1" pointcut="within(controller..*)"/>-->
+    <!--        </aop:aspect>-->
+
+    <!--后置通知 配置实现-->
+    <!--        <aop:aspect ref="operateLogger">-->
+    <!--            <aop:after-returning method="log2" pointcut="within(controller..*)"/>-->
+    <!--        </aop:aspect>-->
+
+    <!--最终通知 配置实现-->
+    <!--        <aop:aspect ref="operateLogger">-->
+    <!--            <aop:after method="log3" pointcut="within(controller..*)"/>-->
+    <!--        </aop:aspect>-->
+
+    <!--环绕通知 配置实现-->
+    <!--        <aop:aspect ref="operateLogger">-->
+    <!--            <aop:around method="log4" pointcut="within(controller..*)"/>-->
+    <!--        </aop:aspect>-->
+
+    <!--异常通知 配置实现-->
+    <!--        <aop:aspect ref="operateLogger">-->
+    <!--            <aop:after-throwing method="log5" throwing="e" pointcut="within(controller..*)"/>-->
+    <!--        </aop:aspect>-->
+
+    <!--    </aop:config>-->
+
+
+
+    <!--配置数据源-->
+    <bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/exam_system?characterEncoding=utf8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="hjx20010707"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="myDataSource"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+
+    <!--配置Mybatis注解-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="dao"/>
+<!--        <property name="annotationClass" value="annotation.MybatisRepository"/>-->
+    </bean>
+
+   <mvc:resources mapping="/jsp/**" location="/WEB-INF/jsp/"/>
+
+    <!--开启注解扫描-->
+    <context:component-scan base-package="controller,dao,entity,service"/>
+    <!--开启@RequestMapping注解-->
+    <mvc:annotation-driven/>
+
+    <mvc:resources location="/img/" mapping="/img/**" />
+<!--    <mvc:resources location="/WEB-INF/jsp/" mapping="/WEB-INF/jsp/**" />-->
+
+
+
+    <!--处理请求转发-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!--文件上传解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10240000"/>
+    </bean>
+       <!--声明事务组件-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="myDataSource"/>
+    </bean>
+    <!--开启事务注解扫描-->
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
+<!--    <bean id="reader" class="org.apache.ibatis.io.Resources"-->
+<!--          factory-method="getResourceAsReader">-->
+<!--        <constructor-arg value="spring-mvc.xml"></constructor-arg>-->
+<!--    </bean>-->
+<!--    <bean id="sessionFactoryBuilder"-->
+<!--          class="org.apache.ibatis.session.SqlSessionFactoryBuilder">-->
+<!--    </bean>-->
+
+<!--    <bean id="sessionFactory" factory-bean="sessionFactoryBuilder"-->
+<!--          factory-method="build">-->
+<!--        <constructor-arg ref="reader"></constructor-arg>-->
+<!--    </bean>-->
+
+<!--    <bean id="session" factory-bean="sessionFactory"-->
+<!--          factory-method="openSession">-->
+<!--    </bean>-->
+    <!-- 后台访问拦截器 -->
+
+<!--    <mvc:interceptors>-->
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/**"/>-->
+<!--            <mvc:exclude-mapping path="jsp/login.jsp"/>-->
+<!--            <mvc:exclude-mapping path="jsp/get_cpacha"/>-->
+<!--            <mvc:exclude-mapping path="/h-ui/**"/>-->
+<!--            <mvc:exclude-mapping path="/easyui/**"/>-->
+<!--            <bean class="interceptor.LoginInterceptor"></bean>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
+</beans>

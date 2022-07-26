@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.PermsDao">
+
+    <resultMap type="entity.Perms" id="PermsMap">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="role_id" column="role_id" jdbcType="INTEGER"/>
+        <result property="pre" column="pre" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <!--查询单个-->
+<!--    <select id="queryById" resultType="entity.Perms">-->
+<!--        select-->
+<!--            p.role_id, p.pre, p.remark, p.id , r.rolename-->
+<!--        from perms p inner join role r-->
+<!--        where r.id = p.role_id-->
+<!--        and p.id = #{id}-->
+<!--    </select>-->
+
+    <!--通过实体作为筛选条件查询-->
+<!--    <select id="queryAll" resultType="entity.Perms" parameterType="entity.Perms">-->
+<!--        select-->
+<!--        p.role_id , p.pre, p.remark, p.id , r.rolename-->
+<!--        from perms p inner join role r on r.id = p.role_id-->
+<!--        <where>-->
+<!--            <if test="role_id != null">-->
+<!--                and role_id = #{role_id}-->
+<!--            </if>-->
+<!--            <if test="pre != null and pre != ''">-->
+<!--                and pre like concat('%',#{pre},'%')-->
+<!--            </if>-->
+<!--            <if test="remark != null and remark != ''">-->
+<!--                and remark = #{remark}-->
+<!--            </if>-->
+<!--            <if test="id != null">-->
+<!--                and p.id = #{id}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+    <select id="queryAll" resultType="entity.Perms">
+        select * from perms
+<!--        <if test="id!=null and id!=''">-->
+<!--            where id like concat("%",#{id},"%")-->
+<!--        </if>-->
+<!--        limit #{start},3-->
+    </select>
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into perms(role_id, pre, remark)
+        values (#{role_id}, #{pre}, #{remark})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update perms
+        <set>
+            <if test="role_id != null">
+                role_id = #{role_id},
+            </if>
+            <if test="pre != null and pre != ''">
+                pre = #{pre},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from perms where id = #{id}
+    </delete>
+
+    <delete id="deleteBatch">
+        delete
+        from perms
+        where id in
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
+

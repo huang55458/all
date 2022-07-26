@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ExamHistoryTable">
+    <insert id="insert">
+        insert into exam_system.exam_history(username, userid, time, score) values (#{username},#{userid},#{time},#{score})
+    </insert>
+    <select id="findAll" resultType="entity.ExamHistory">
+        select * from exam_system.exam_history
+    </select>
+    <select id="findById" resultType="entity.ExamHistory">
+        select * from exam_system.exam_history where userid = #{userid}
+    </select>
+    <delete id="delete">
+        delete from exam_system.exam_history where userid = #{userid}
+    </delete>
+</mapper>

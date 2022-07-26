@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.RoleDao">
+    <!--  根据用户编号查询拥有的全部角色  -->
+    <select id="findRoleByUid" resultType="com.entity.User_Role">
+        select * from user_role where user_id = #{user_id}
+    </select>
+    <!-- 查询所有角色信息 -->
+    <select id="findAllRole" resultType="com.entity.Role">
+        select * from role;
+    </select>
+
+    <!-- 添加角色信息 -->
+    <insert id="insertRole" parameterType="com.entity.User_Role">
+        insert ignore into user_role(user_id,role_id) values(#{user_id},#{role_id})
+    </insert>
+
+    <!-- 查询用户没有拥有的角色信息-->
+    <select id="findWithoutRole" resultType="int">
+        select role_id from user_role where user_id = #{user_id} and role_id not in
+        <foreach collection="roleIds" item="roleid" open="(" separator="," close=")">
+            #{roleid}
+        </foreach>
+    </select>
+
+    <!-- 删除角色信息 -->
+    <delete id="deleteRole">
+        delete from user_role where user_id = #{user_id} and role_id in
+        <foreach collection="roleIds" item="roleid" open="(" close=")" separator=",">#{roleid}</foreach>
+    </delete>
+
+
+</mapper>
+
+

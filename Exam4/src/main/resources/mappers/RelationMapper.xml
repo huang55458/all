@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.User_relation_Dao">
+    <select id="findAllMyFriend" parameterType="java.lang.Integer" resultType="entity.User">
+        select u.* from (
+
+        SELECT applicant_id,beiApp_id from user_relation where relation_status=1
+
+        union
+
+        SELECT beiApp_id,applicant_id from user_relation where relation_status=1
+
+        ) as f
+
+        LEFT JOIN user as y on f.applicant_id = y.id
+
+        LEFT JOIN user as u on f.beiApp_id = u.id
+
+        WHERE y.id = #{userId}
+    </select>
+
+    <insert id="addFriendApply" parameterType="java.lang.Integer">
+        insert into user_relation(applicant_id,beiApp_id,relation_status) values(#{userId},#{friendId},2)
+    </insert>
+
+    <update id="agreeApply" parameterType="java.lang.Integer">
+        update user_relation set relation_status = 1 where applicant_id = #{applicant_id} and beiApp_id = #{beiApp_id}
+    </update>
+
+    <delete id="refuseApply" parameterType="java.lang.Integer">
+        delete from user_relation where applicant_id = #{applicant_id} and beiApp_id = #{beiApp_id} and relation_status = 2
+    </delete>
+
+    <delete id="deleteFriend" parameterType="java.lang.Integer">
+        delete from user_relation where applicant_id = #{applicant_id} and beiApp_id = #{beiApp_id} or applicant_id = #{beiApp_id} and beiApp_id = #{applicant_id}
+    </delete>
+
+    <insert id="banFriend" parameterType="java.lang.Integer">
+        insert into user_relation(applicant_id,beiApp_id,relation_status) values(#{userId},#{friendId},0)
+    </insert>
+
+    <select id="selectBan" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select beiApp_id from user_relation where applicant_id=#{userId} and relation_status=0;
+    </select>
+
+    <select id="selectBaned" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select beiApp_id from user_relation where applicant_id=#{friendId} and relation_status=0;
+    </select>
+
+    <select id="selecttwo" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select beiApp_id from user_relation where applicant_id=#{userId} and relation_status=2;
+    </select>
+
+    <select id="selectMessage" parameterType="java.lang.Integer" resultType="entity.User">
+        select * from user where id in (select applicant_id from user_relation where beiApp_id=#{userId} and relation_status=2);
+    </select>
+
+    <select id="allMyBan" parameterType="java.lang.Integer" resultType="entity.User">
+        select * from user where id in (select beiApp_id from user_relation where applicant_id=#{userId} and relation_status=0);
+    </select>
+
+    <delete id="cancelBan" parameterType="java.lang.Integer">
+        delete from user_relation where applicant_id = #{applicant_id} and beiApp_id = #{beiApp_id} and relation_status = 0
+    </delete>
+    <update id="logout" parameterType="java.lang.Integer">
+        update user set status = 0 where id = #{userId}
+    </update>
+</mapper>

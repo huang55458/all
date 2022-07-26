@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.UserDao">
+    <resultMap id="UserMap" type="entity.User">
+        <id column="id" property="id" />
+        <result column="img" property="img" />
+        <result column="login_name" property="login_name" />
+        <result column="password" property="password" />
+        <result column="tel" property=" tel" />
+        <result column="email" property="email" />
+        <result column="user_name" property="user_name" />
+        <result column="status" property="status" />
+        <result column="create_time" property="create_time" />
+        <result column="update_time" property="update_time" />
+        <result column="type" property="type" />
+    </resultMap>
+
+    <select id="findByUserName" resultType="entity.User">
+  		select * from user where user_name = #{user_name}
+  	</select>
+
+    <select id="findByLoginName" resultType="entity.User">
+  		select * from user where login_name = #{login_name}
+  	</select>
+
+    <select id="login" parameterType="entity.User" resultType="entity.User">
+        select * from user
+        <where>
+            <if test="login_name !=null and login_name !=''">
+                and login_name = #{login_name}
+            </if>
+            <if test="password !=null and password !=''">
+                and password = #{password}
+            </if>
+
+        </where>
+    </select>
+
+    <select id="find" parameterType="entity.User" resultType="entity.User">
+        select * from user
+        where login_name = #{login_name}
+        and password = #{password}
+<!--         and type = #{type}-->
+    </select>
+
+    <delete id="deleteById" parameterType="entity.User">
+        delete from user where id = #{id}
+    </delete>
+    <update id="delete" parameterType="String">
+  		delete from user where id in (${value})
+  	</update>
+    <update id="update" parameterType="entity.User">
+       update user set img=#{img},login_name = #{login_name},password = #{password},
+  		tel=#{tel},email=#{email} where id = #{id}
+    </update>
+
+    <select id="findAll" resultType="entity.User">
+        select * from user
+    </select>
+<!--    分页-->
+<!--     获取用户list 这里的  #{start} 中 start 必须要与 @Param("start") 中的 start 名字一样 否则无法传入参数   #{count}同理-->
+
+    <select id="findUserAll" resultType="entity.User">
+        select * from user
+        <if test="user_name!=null and user_name!=''">
+            where user_name like concat("%",#{user_name},"%")
+        </if>
+        limit #{start},5
+    </select>
+    <select id="getTotalCount" resultType="int">
+        select count(*) from user
+        <if test="user_name!=null and user_name !=''">
+            where user_name like concat("%",#{user_name},"%")
+        </if>
+    </select>
+
+
+    <select id="findById" parameterType="entity.User" resultType="entity.User">
+        select * from user where id = #{id}
+    </select>
+    <insert id="add" parameterType="entity.User">
+        insert into user(img,login_name,password,tel,email,user_name,status,create_time,update_time,type)
+        values(#{img},#{login_name},#{password},#{tel},#{email},#{user_name},#{status},#{create_time},#{update_time},#{type})
+    </insert>
+
+    <update id="edit" parameterType="entity.User">
+  		update user set login_name = #{login_name},password = #{password} where id = #{id}
+  	</update>
+<!--模糊查询-->
+    <select id="findSearchUser" resultType="entity.User">
+        select * from user
+        <where>
+            user_name like concat('%',#{user_name},'%')
+            <!-- or id = #{id}
+            or type = #{type}-->
+        </where>
+    </select>
+
+<!--    批量删除-->
+    <delete id="deleteMany">
+        delete from user where id in
+        <foreach item="ids" collection="array" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <select id="checkLoginName" parameterType="String" resultType="entity.User">
+        select * from user where login_name = #{login_name}
+    </select>
+
+    <!--    <delete id="deleteBatchUser">-->
+<!--        delete-->
+<!--        from t_user-->
+<!--        where id in-->
+<!--        <foreach collection="ids" open="(" separator="," close=")" item="id">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--    </delete>-->
+<!--    <delete id="deleteBatchRole">-->
+<!--        delete-->
+<!--        from t_user_role-->
+<!--        where user_id in-->
+<!--        <foreach collection="ids" open="(" separator="," close=")" item="id">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--    </delete>-->
+
+<!--    <select id="selectAllActivitys" resultType="entity.User">-->
+<!--    select * from user-->
+<!--</select>-->
+
+
+</mapper>

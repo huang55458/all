@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ExamIndexTable">
+    <select id="findExamTable" resultType="string">
+        select table_name from exam_system.exam_index_table where level = #{level} and type = #{type}
+    </select>
+    <select id="findExamById" resultType="entity.Exam">
+        select * from exam_system.${tableName} where id = #{id}
+    </select>
+    <insert id="insertExam">
+        insert into exam_system.${tableName} (question,a,b,c,d,answer,level,type)
+        values (#{exam.question},#{exam.a},#{exam.b},#{exam.c},#{exam.d},#{exam.answer},#{exam.level},#{exam.type});
+    </insert>
+    <select id="findAllExam" resultType="entity.Exam">
+        select * from exam_system.${tableName}
+    </select>
+    <update id="updateExam">
+        update exam_system.${tableName} set
+                    question = #{exam.question},
+                    a = #{exam.a},
+                    b = #{exam.b},
+                    c = #{exam.c},
+                    d = #{exam.d},
+                    answer = #{exam.answer}
+        where id = #{exam.id}
+    </update>
+    <delete id="deleteExam">
+        delete from exam_system.${tableName} where id = #{id}
+    </delete>
+    <select id="findSomeExam" resultType="entity.Exam">
+        SELECT * FROM exam_system.${tableName}
+        WHERE id >= ((SELECT MAX(id) FROM exam_system.${tableName})-(SELECT MIN(id) FROM exam_system.${tableName})) * RAND() + (SELECT MIN(id) FROM exam_system.${tableName}) - 10 LIMIT #{length}
+    </select>
+</mapper>
