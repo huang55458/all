@@ -23,11 +23,6 @@
 //    request.getRequestDispatcher("/user/userInfo.jsp").forward(request,response);
 
 %>
-<div class="layui-layer layui-layer-iframe" id="layui-layer1"
-     type="iframe" times="1" showtime="0" contype="string"
-     style="z-index: 19891015; width: 700px; height: 800px; top: 100px; left: 393.5px;">
-    <div class="layui-layer-title" style="cursor: move;">修改用户</div>
-
 <form action="/user/mod.do" method="post" enctype="multipart/form-data" class="layui-form" lay-filter="example">
    <p style="font-family: 楷体;font-size: larger">编号：${user.id}</p>
     <div class="layui-form-item">
@@ -88,15 +83,13 @@
 <%--    邮箱：<input id="email" type="text" name="email" value="${user.email}">--%>
 <%--    <span id="emerror"></span>--%>
 <%--    <br/>--%>
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-        <input class="layui-btn" type="submit" value="修改" onclick="checked()"/>
-        </div>
-    </div>
+    <input class="layui-btn" type="submit" value="修改" onclick="checked()"/><br>
 </form>
-</div>
-<a href="/user/userList.do"><img src="/img/index_left/coin02.png"></a>
 
+
+<div class="layui-btn-container">
+    <button type="button" class="layui-btn layui-btn-primary"><a href="/user/userList.do">返回用户管理页面</a></button>
+</div>
 
 <%--</body>--%>
 <%@include file="footer.jsp" %>

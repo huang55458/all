@@ -227,9 +227,11 @@ public class UserController {
         public String logout(HttpServletRequest request) {
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
-            user.setStatus(0);
-            userService.update(user);
-            session.invalidate();
+            if (user != null) {
+                user.setStatus(0);
+                userService.update(user);
+                session.invalidate();
+            }
             return "redirect:/";
         }
     @GetMapping("logout2.do")

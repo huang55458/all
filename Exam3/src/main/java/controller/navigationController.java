@@ -25,4 +25,8 @@ public class navigationController {
     public String frintPage() {
         return "frintPage.jsp";
     }
+    @GetMapping("index.form")
+    public String index() {
+        return "index.jsp";
+    }
 }

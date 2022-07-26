@@ -223,7 +223,7 @@
     </div>
 <%--    </div>--%>
 <%--</iframe>--%>
-<a href="/user/userList.do"><img src="/img/index_left/coin02.png"></a>
+<%--<a href="/user/userList.do">返回用户管理页面</a>--%>
 <%--</body>--%>
     <%@include file="footer.jsp" %>
 <script type="text/javascript" src="/js/editUser.js"></script>
