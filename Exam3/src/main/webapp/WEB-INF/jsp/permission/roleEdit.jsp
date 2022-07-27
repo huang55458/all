@@ -7,7 +7,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@include file="../head.jsp" %>
+<%--<html>--%>
     <head>
         <title>Title</title>
         <script src="/js/axios.min.js"></script>
@@ -24,13 +25,13 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户编号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="uid"  readonly value="${curUser.id}" autocomplete="off" class="layui-input">
+                        <input type="text" name="uid"  readonly value="${sessionScope.user.id}" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户名</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="username"  readonly value="${curUser.login_name}" autocomplete="off" class="layui-input">
+                        <input type="text" name="username"  readonly value="${sessionScope.user.login_name}" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -51,9 +52,9 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">请选择更改后角色</label>
                     <div class="layui-input-block">
-                        <input type="checkbox" name="rolelist" value="1" title="学生">
-                        <input type="checkbox" name="rolelist" value="2" title="教师" >
-                        <input type="checkbox" name="rolelist" value="3" title="管理员" >
+                        <input type="radio" name="rolelist" value="3" title="学生">
+                        <input type="radio" name="rolelist" value="2" title="教师" >
+                        <input type="radio" name="rolelist" value="1" title="管理员" >
                     </div>
                 </div>
             <input class="layui-btn layui-col-md1" style="margin-left: 50px" type="submit" value="更新" onclick="return updateRole()"/><br>
@@ -61,7 +62,8 @@
         <a href="/user/userList.do" class="layui-col-md12" style="margin:20px 50px">返回用户管理页面</a>
 
     </body>
-</html>
+<%--</html>--%>
+<%@include file="../footer.jsp" %>
 <script type="text/javascript" src="/js/jquery-3.6.0.js"></script>
 <script type="text/javascript">
     function updateRole() {

@@ -1,6 +1,6 @@
 package entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,8 +20,10 @@ public class User implements Serializable {
     private String user_name;//用户名
     private int status;//状态(在线-1，离线-0)
 //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date create_time;//创建时间
 //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date update_time;//更新时间
     private int type;//用户类型
     private List<User> users;

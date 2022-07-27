@@ -20,7 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller("userController")
 @RequestMapping("user")
@@ -58,6 +60,27 @@ public class UserController {
 //        model.setViewName("jsp/user_list");
 //        return model;
 //    }
+
+    /*
+    跳转后台管理界面，并判断当前登录用户是否有该权限
+ */
+    @ResponseBody
+    @RequestMapping("/toAdmin.do")
+    public Map<String,Object> toAdminPage(HttpSession session){
+        Object currentRole = session.getAttribute("currentRole");
+        Map<String,Object> map = new HashMap<>();
+        String roleList = "";
+        if (currentRole != null){
+            roleList = currentRole.toString();
+        }
+        //教师或者是管理员角色都能进入后台界面
+        if (roleList.contains("admin") || roleList.contains("teacher")){
+            map.put("status","1");
+        }else {
+            map.put("status","0");
+        }
+        return map;
+    }
 
     @RequestMapping("/checkName.do")
     @ResponseBody//返回给jsp字符串格式

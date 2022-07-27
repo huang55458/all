@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 0.0
@@ -6,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
   <head>
     <title>$Title$</title>
@@ -719,7 +721,7 @@
                       <br/>
                       <br/>
                       <br/>
-                      <h2><a href="/welcome.form">个人中心</a></h2>
+                      <h2><a href="javascript:;" onclick="return toAmdin()">管理中心</a></h2>
                       <br/>
                       <br/>
                       <br/>
@@ -812,6 +814,29 @@
               book.removeClass().addClass('view-rotate');
           });
       });
+      function toAmdin() {
+          console.log(${ctx}"/user/toAdmin.do");
+          $.ajax({
+              url: ${ctx}"/user/toAdmin.do",
+              data: "",
+              type: "post",
+              dataType: "json",
+              success: function (data) {
+                  console.log(data.status);
+                  if (data.status === "1") {
+                      window.location.href="/welcome.form";  //跳转页面
+                  } else {
+                      alert("当前用户没有权限....");
+                  }
+              },
+              error: function (jqXHR, textStatus, errorThorown) {
+                  console.log("jqXHR:" + jqXHR);
+                  console.log("textStatus:" + textStatus);
+                  console.log("errorThorown:" + errorThorown);
+              }
+          })
+
+      }
   </script>
   </body>
 </html>

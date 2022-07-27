@@ -19,7 +19,7 @@
 
         layui.table.render({
             elem: '#test'
-            ,height: 'full - 100'
+            ,height: 'full - 400'
             ,url: 'allHistoryTest.form' //数据接口
             // ,page: true //开启分页
             // ,maxLength : 370

@@ -58,6 +58,10 @@
 
         }
 
+        function editRole(id){
+            window.location.href="/role/queryRole.do?uid="+id;
+
+        }
 
 
     </script>
@@ -174,6 +178,7 @@
                     <td>${user.type}</td>
                     <td><input type="button" class="btn_modify" value="修改" onclick="modify(${user.id});">
                         <input type="button" class="btn_delete" value="删除" onclick="del(${user.id});">
+                        <input type="button" class="layui-btn-primary" value="编辑角色" onclick="editRole(${user.id})">
                     </td>
                 </tr>
             </c:forEach>

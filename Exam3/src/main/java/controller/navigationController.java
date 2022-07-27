@@ -29,4 +29,8 @@ public class navigationController {
     public String index() {
         return "index.jsp";
     }
+    @GetMapping("roleEdit.form")
+    public String roleindex() {
+        return "permission/roleEdit.jsp";
+    }
 }
