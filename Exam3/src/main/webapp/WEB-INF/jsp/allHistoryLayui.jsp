@@ -50,7 +50,7 @@
 
                     //
                     layui.$.ajax({
-                        type: 'POST',
+                        type: 'GET',
                         url: 'deleteExamHistory.form',
                         data: {
                             id: obj.data.id

@@ -63,7 +63,7 @@
               <dd><a href="/user/add.do">新增</a></dd>
             </dl>
           </li>
-          <li class="layui-nav-item">
+          <li class="layui-nav-item layui-nav-itemed">
             <a class="" href="javascript:;">题库管理</a>
             <dl class="layui-nav-child">
               <dd><a href="/manageExam.form">题库列表</a></dd>
@@ -72,8 +72,8 @@
               <%--                                <dd><a href="">超链接</a></dd>--%>
             </dl>
           </li>
-          <li class="layui-nav-item"><a href="/perms/list.do">权限管理</a></li>
-          <li class="layui-nav-item"><a href="">发布商品</a></li>
+          <li class="layui-nav-item"><a href="/user/userList.do">权限管理</a></li>
+<%--          <li class="layui-nav-item"><a href="">test</a></li>--%>
         </ul>
       </div>
     </div>

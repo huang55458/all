@@ -117,7 +117,7 @@ public class ManageExam {
         return examHistoryTable.findAll();
     }
 
-    @PostMapping("deleteExamHistory.form")
+    @GetMapping("deleteExamHistory.form")
     public void deleteExamHistory(ExamHistory examHistory) {
         examHistoryTable.delete(examHistory);
     }

@@ -9,6 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file="head.jsp" %>
+<%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%--<html>--%>
 <head>
     <title>Title</title>
@@ -172,13 +174,20 @@
                     <td>${user.email}</td>
                     <td>${user.user_name}</td>
                     <td>${user.status}</td>
-                    <td>${user.create_time}</td>
+                    <td>
+                        <fmt:formatDate value="${user.create_time}" type="date" pattern="yyyy-MM-dd HH:mm:ss" />
+                    </td>
+                    <td>
+                        <fmt:formatDate value="${user.update_time}" type="date" pattern="yyyy-MM-dd HH:mm:ss" />
+                    </td>
+
+                <%--                    <td>${user.create_time}</td>--%>
 <%--                    <td><fmt:formatDate value="${user.create_time}" pattern="yyyy-MM-dd"/></td>--%>
-                    <td>${user.update_time}</td>
+<%--                    <td>${user.update_time}</td>--%>
                     <td>${user.type}</td>
-                    <td><input type="button" class="btn_modify" value="修改" onclick="modify(${user.id});">
-                        <input type="button" class="btn_delete" value="删除" onclick="del(${user.id});">
-                        <input type="button" class="layui-btn-primary" value="编辑角色" onclick="editRole(${user.id})">
+                    <td><input type="button" class="layui-btn layui-btn-warm layui-btn-xs" value="修改" onclick="modify(${user.id});">
+                        <input type="button" class="layui-btn layui-btn-danger layui-btn-xs" value="删除" onclick="del(${user.id});">
+                        <input type="button" class="layui-btn layui-btn-warm layui-btn-xs" value="编辑角色" onclick="editRole(${user.id})">
                     </td>
                 </tr>
             </c:forEach>
