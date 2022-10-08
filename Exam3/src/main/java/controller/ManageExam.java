@@ -1,5 +1,6 @@
 package controller;
 
+import com.github.pagehelper.PageHelper;
 import dao.ExamHistoryTable;
 import dao.ExamIndexTable;
 import entity.Exam;
@@ -63,13 +64,17 @@ public class ManageExam {
         if (tableName == null) {
             tableName = "exam_level_1_java";
         }
-        List<Exam> list = examIndexTable.findAllExam(tableName);
 
-        if (list.size()  / limit >= page) {
-            return new ExamHistoryJson(list.size(),list.subList((page - 1) * limit,limit * page));
-        } else {
-            return new ExamHistoryJson(list.size(),list.subList((page - 1) * limit,list.size()));
-        }
+        //分页插件
+        PageHelper.startPage(page,limit);
+        List<Exam> list = examIndexTable.findAllExam(tableName);
+        return new ExamHistoryJson(list.size(),list);
+
+//        if (list.size()  / limit >= page) {
+//            return new ExamHistoryJson(list.size(),list.subList((page - 1) * limit,limit * page));
+//        } else {
+//            return new ExamHistoryJson(list.size(),list.subList((page - 1) * limit,list.size()));
+//        }
 //        return new ExamHistoryJson(list.size(),list.subList(0,10));
     }
 
