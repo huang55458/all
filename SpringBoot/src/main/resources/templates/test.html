@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    table{
+        border-collapse: collapse;
+    }
+    td,th{
+        border: 1px solid black;
+    }
+</style>
+<body>
+<span th:text="${msg}"></span><br>
+<input value="2" th:value="${msg}"><br>
+<span th:text="${#strings.isEmpty(msg)}"></span><br>
+<span th:text="${#strings.contains(msg,'9')}"></span><br>
+<span th:text="${#strings.contains(msg,'h')}"></span><br>
+<span th:text="${#strings.startsWith(msg,'9')}"></span><br>
+<span th:text="${#strings.startsWith(msg,'t')}"></span><br>
+<span th:text="${#strings.endsWith(msg,'9')}"></span><br>
+<span th:text="${#strings.endsWith(msg,'f')}"></span><br>
+<span th:text="${#strings.length(msg)}"></span><br>
+<span th:text="${#strings.indexOf(msg,'y')}"></span><br>
+<span th:text="${#strings.indexOf(msg,'y')}"></span><br>
+<span th:text="${#strings.substring(msg,4)}"></span><br>
+<span th:text="${#strings.substring(msg,4,7)}"></span><br>
+<span th:text="${#strings.toUpperCase(msg)}"></span><br>
+<span th:text="${#strings.toLowerCase(msg)}"></span><br>
+
+<span th:text="${#dates.format(date)}"></span><br>
+<span th:text="${#dates.format(date,'yyyy-MM-dd')}"></span><br>
+<span th:text="${#dates.year(date)}"></span><br>
+<span th:text="${#dates.month(date)}"></span><br>
+<span th:text="${#dates.day(date)}"></span><br>
+
+<span th:if="${sex == '男'}">男</span>
+<span th:if="${sex == '女'}">女</span><br>
+
+<div th:switch="${id}">
+    <span th:case="1">1</span>
+    <span th:case="2">2</span>
+    <span th:case="3">3</span>
+</div>
+<table>
+    <tr><th>id</th><th>name</th><th>age</th></tr>
+    <tr th:each="uses : ${allUses}">
+        <td th:text="${uses.id}"></td>
+        <td th:text="${uses.name}"></td>
+        <td th:text="${uses.age}"></td>
+    </tr>
+</table>
+</body>
+</html>

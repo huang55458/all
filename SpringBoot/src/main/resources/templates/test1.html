@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    table{
+        border-collapse: collapse;
+    }
+    td,th{
+        border: 1px solid black;
+    }
+</style>
+<body>
+<table style="border-collapse: collapse">
+    <tr><th>id</th><th>username</th><th>age</th></tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.age}"></td>
+    </tr>
+</table>
+<hr>
+<table style="border-collapse: collapse">
+    <tr><th>id</th><th>username</th><th>age</th>
+        <th>index</th><th>count</th><th>size</th>
+        <th>even</th><th>odd</th><th>first</th><th>last</th></tr>
+    <tr th:each="user,var : ${users}">
+        <td th:tex  t="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.age}"></td>
+        <td th:text="${var.index}"></td>
+        <td th:text="${var.count}"></td>
+        <td th:text="${var.size}"></td>
+        <td th:text="${var.even}"></td>
+        <td th:text="${var.odd}"></td>
+        <td th:text="${var.first}"></td>
+        <td th:text="${var.last}"></td>
+    </tr>
+</table>
+<hr>
+<table style="border-collapse: collapse">
+    <tr><th>address</th></tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user}"></td>
+    </tr>
+</table>
+<hr>
+<table style="border-collapse: collapse">
+    <tr><th>id</th><th>username</th><th>age</th></tr>
+    <tr th:each="user : ${users}">
+        <td th:each="entry:${user}" th:text="${user.id}"></td>
+        <td th:each="entry:${user}" th:text="${user.username}"></td>
+        <td th:each="entry:${user}" th:text="${user.age}"></td>
+    </tr>
+</table>
+<hr>
+request:<span th:text="${#request.getAttribute('request')}"></span><br>
+session:<span th:text="${session.session}"></span><br>
+application:<span th:text="${application.servletContext}"></span>
+</body>
+</html>
