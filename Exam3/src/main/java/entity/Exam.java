@@ -1,10 +1,12 @@
 package entity;
 
+import java.io.Serializable;
+
 /**
  * @author chumeng
  * @date 2022/7/15 13:22
  */
-public class Exam {
+public class Exam implements Serializable {
     private int id;
     private String question;
     private String a;

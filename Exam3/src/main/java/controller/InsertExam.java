@@ -6,6 +6,8 @@ import entity.Exam;
 import entity.ExamHistory;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author chumeng
@@ -28,6 +31,13 @@ import java.util.Objects;
 public class InsertExam {
     private ExamHistoryTable examHistoryTable;
     private ExamIndexTable examIndexTable;
+
+    @Autowired
+    public void setRedisTemplate(RedisTemplate<String, Exam> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
+    private RedisTemplate<String,Exam> redisTemplate;
 
     public ExamHistoryTable getExamHistoryTable() {
         return examHistoryTable;
@@ -79,8 +89,18 @@ public class InsertExam {
         exam.setLevel(level);
         exam.setType(type);
         String tableName = examIndexTable.findExamTable(exam);
-        // 从数据库查询出的考试题目
-        List<Exam> list = examIndexTable.findSomeExam(tableName, Property.examLength);
+
+        //redis 缓存试题
+        ListOperations<String,Exam> listOps = redisTemplate.opsForList();
+        List<Exam> list = null;
+        if (listOps.size(tableName) == 0) {
+            // 从数据库查询出的考试题目
+            list = examIndexTable.findSomeExam(tableName, Property.examLength);
+            listOps.rightPushAll("exams",list);
+        } else {
+            list = listOps.range("exams",0,-1);
+        }
+        redisTemplate.expire(tableName,60, TimeUnit.SECONDS);
 
         // 将考题放入 session 中
         HttpSession session = request.getSession();

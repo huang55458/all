@@ -23,6 +23,31 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
+    <!--Jedis连接池配置-->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="200" />
+        <property name="maxWaitMillis" value="2000" />
+        <property name="testOnBorrow" value="true"/>
+    </bean>
+    <!--
+    Jedis连接工厂对象
+    host-name:redis的IP
+    port:端口号
+    password:密码
+    pool-config-re:连接池信息配置
+ -->
+    <bean id="JedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:host-name="172.16.136.128"
+          p:port="6379"
+          p:password="chumeng"
+          p:pool-config-ref="poolConfig"/>
+    <!--Jedis对缓存操作的模板对象-->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <!--配置数据源-->
+        <property name="connectionFactory" ref="JedisConnectionFactory" />
+    </bean>
+
+
     <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
         <property name="username" value="root"/>
